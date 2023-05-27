@@ -24,10 +24,18 @@
 
   <properties resource="org/apache/ibatis/databases/local/local-test.properties"/>
 
+  <!-- 配置参考：org.apache.ibatis.session.Configuration -->
   <settings>
-    <!-- 配置参考：org.apache.ibatis.session.Configuration -->
+    <!--
+      参考：https://mybatis.org/mybatis-3/zh/java-api.html#sqlSessions 本地缓存小节。
+      org.apache.ibatis.session.LocalCacheScope.SESSION   默认值。默认情况下，本地缓存数据的生命周期等同于整个 session 的周期。
+      org.apache.ibatis.session.LocalCacheScope.STATEMENT 只在语句执行时使用缓存。
+      注意：如果设置了STATEMENT，则query执行结束时会把当前会话的本地缓存清除，即当前会话的查询语句总是会查询数据库。参考：org.apache.ibatis.executor.BaseExecutor.query(org.apache.ibatis.mapping.MappedStatement, java.lang.Object, org.apache.ibatis.session.RowBounds, org.apache.ibatis.session.ResultHandler, org.apache.ibatis.cache.CacheKey, org.apache.ibatis.mapping.BoundSql)
+    -->
+    <setting name="localCacheScope" value="SESSION"/>
+    <!-- 默认为true -->
     <setting name="cacheEnabled" value="true"/>
-<!--    <setting name="lazyLoadingEnabled" value="false"/>-->
+    <!--    <setting name="lazyLoadingEnabled" value="false"/>-->
 <!--    <setting name="multipleResultSetsEnabled" value="true"/>-->
 <!--    <setting name="useColumnLabel" value="true"/>-->
 <!--    <setting name="useGeneratedKeys" value="false"/>-->

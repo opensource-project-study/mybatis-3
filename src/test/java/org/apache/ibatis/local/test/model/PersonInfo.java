@@ -14,24 +14,27 @@ public class PersonInfo {
     return id;
   }
 
-  public void setId(int id) {
+  public PersonInfo setId(int id) {
     this.id = id;
+    return this;
   }
 
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public PersonInfo setName(String name) {
     this.name = name;
+    return this;
   }
 
   public int getAge() {
     return age;
   }
 
-  public void setAge(int age) {
+  public PersonInfo setAge(int age) {
     this.age = age;
+    return this;
   }
 
   @Override

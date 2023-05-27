@@ -10,6 +10,14 @@ public interface PersonMapper {
 
   PersonInfo getById(int id);
 
+  String getNameById(int id);
+
+  int getAgeById(int id);
+
+  int insert(PersonInfo personInfo);
+
   int update(PersonInfo personInfo);
+
+  int delete(int id);
 
 }

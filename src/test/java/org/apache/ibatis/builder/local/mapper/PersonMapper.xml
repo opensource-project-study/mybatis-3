@@ -26,6 +26,27 @@
     SELECT * FROM t_person WHERE id = #{id}
   </select>
 
+  <select id="getNameById" resultType="java.lang.String">
+    SELECT name from t_person WHERE id=#{id}
+  </select>
+
+  <select id="getAgeById" resultType="java.lang.Integer">
+    SELECT age from t_person WHERE id=#{id}
+  </select>
+
+  <insert id="insert">
+    INSERT INTO t_person
+    (
+     name,
+     age
+    )
+    VALUES
+    (
+     #{name},
+     #{age}
+    )
+  </insert>
+
   <update id="update">
     UPDATE t_person
     <trim prefix="SET" suffixOverrides=",">
@@ -38,5 +59,9 @@
     </trim>
     WHERE id=#{id}
   </update>
+
+  <delete id="delete">
+    DELETE FROM t_person WHERE id=#{id}
+  </delete>
 
 </mapper>
