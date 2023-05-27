@@ -73,7 +73,7 @@ class MyBatisCacheTest {
     System.out.println(personMapper.getById(1));
     System.out.println(personMapper.getById(1));
     // 清除本地缓存
-    System.out.println("更新了" + personMapper.insert(new PersonInfo().setId(1).setAge(23)) + "条记录");
+    System.out.println("更新了" + personMapper.update(new PersonInfo().setId(1).setAge(23)) + "条记录");
     System.out.println(personMapper.getById(1));
     System.out.println(personMapper.getById(1));
   }
@@ -86,7 +86,7 @@ class MyBatisCacheTest {
     System.out.println(personMapper.getById(1));
     System.out.println(personMapper.getById(1));
     // 即使删除记录失败，也会清除本地缓存。
-    System.out.println("删除了" + personMapper.delete(5) + "条记录");
+    System.out.println("删除了" + personMapper.delete(6) + "条记录");
     System.out.println(personMapper.getById(1));
     System.out.println(personMapper.getById(1));
   }
