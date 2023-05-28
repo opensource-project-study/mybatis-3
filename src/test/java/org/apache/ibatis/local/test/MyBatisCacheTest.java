@@ -3,7 +3,10 @@ package org.apache.ibatis.local.test;
 import java.io.Reader;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.local.test.dao.BookMapper;
+import org.apache.ibatis.local.test.dao.PersonBookMapper;
 import org.apache.ibatis.local.test.dao.PersonMapper;
+import org.apache.ibatis.local.test.model.BookInfo;
 import org.apache.ibatis.local.test.model.PersonInfo;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
@@ -110,6 +113,60 @@ class MyBatisCacheTest {
     // sqlSession2  从数据库查询，并写入本地缓存
     System.out.println("sqlSession2 " + sqlSession2.getMapper(PersonMapper.class).getById(1));
     System.out.println("sqlSession2 " + sqlSession2.getMapper(PersonMapper.class).getById(1));
+  }
+
+  // ------------------------ 测试 二级缓存 ------------------------
+
+  @Test
+  void testSecondLevelCache() {
+    SqlSession sqlSession1 = sqlSessionFactory.openSession(true);
+    SqlSession sqlSession2 = sqlSessionFactory.openSession(true);
+
+    System.out.println("sqlSession1 " + sqlSession1.getMapper(BookMapper.class).getById(1));
+    sqlSession1.commit();
+    System.out.println("sqlSession1 " + sqlSession1.getMapper(BookMapper.class).getById(1));
+    System.out.println("sqlSession2 " + sqlSession2.getMapper(BookMapper.class).getById(1));
+  }
+
+  @Test
+  void testSecondLevelCacheWhenInsert() {
+//    SqlSession sqlSession1 = sqlSessionFactory.openSession(true);
+//    SqlSession sqlSession2 = sqlSessionFactory.openSession(true);
+//
+//    System.out.println("sqlSession1 " + sqlSession1.getMapper(BookMapper.class).getById(1));
+//    System.out.println("sqlSession1 " + sqlSession1.getMapper(BookMapper.class).getById(1));
+//    System.out.println("增加了" + sqlSession1.getMapper(BookMapper.class).insert(new BookInfo().setBookName("小王子").setBookPrice(100.0F)) + "条记录");
+//    sqlSession1.commit();
+//    System.out.println("sqlSession1 " + sqlSession1.getMapper(BookMapper.class).getById(1));
+//    System.out.println("sqlSession2 " + sqlSession2.getMapper(BookMapper.class).getById(1));
+  }
+
+  @Test
+  void testSecondLevelCacheWhenUpdate() {
+    SqlSession sqlSession1 = sqlSessionFactory.openSession(true);
+    SqlSession sqlSession2 = sqlSessionFactory.openSession(true);
+
+    System.out.println("sqlSession1 " + sqlSession1.getMapper(BookMapper.class).getById(1));
+    sqlSession1.commit();
+    System.out.println("sqlSession1 " + sqlSession1.getMapper(BookMapper.class).getById(1));
+    System.out.println("更新了" + sqlSession1.getMapper(BookMapper.class).update(new BookInfo().setId(1).setBookPrice(101.0F)) + "条记录");
+    sqlSession1.commit();
+    System.out.println("sqlSession1 " + sqlSession1.getMapper(BookMapper.class).getById(1));
+    System.out.println("sqlSession2 " + sqlSession2.getMapper(BookMapper.class).getById(1));
+  }
+
+  @Test
+  void testSecondLevelCacheMoreTables() {
+    SqlSession sqlSession1 = sqlSessionFactory.openSession(true);
+    SqlSession sqlSession2 = sqlSessionFactory.openSession(true);
+
+    System.out.println("sqlSession1 " + sqlSession1.getMapper(PersonBookMapper.class).getByPersonId(1));
+    sqlSession1.commit();
+
+    System.out.println("sqlSession2更新了" + sqlSession2.getMapper(BookMapper.class).update(new BookInfo().setId(1).setBookPrice(109.0F)) + "条t_book记录");
+    sqlSession2.commit();
+    System.out.println("sqlSession1 " + sqlSession1.getMapper(PersonBookMapper.class).getByPersonId(1));
+
   }
 
 }

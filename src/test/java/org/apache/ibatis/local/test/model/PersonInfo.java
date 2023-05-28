@@ -1,10 +1,14 @@
 package org.apache.ibatis.local.test.model;
 
+import java.io.Serializable;
+
 /**
  * @author yuwenbo@kkworld.com
  * @date 2023/5/26
  */
-public class PersonInfo {
+public class PersonInfo implements Serializable {
+
+  private static final long serialVersionUID = 5418361501553150609L;
 
   private int id;
   private String name;

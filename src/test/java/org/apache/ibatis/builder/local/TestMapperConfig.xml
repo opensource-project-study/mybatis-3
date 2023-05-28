@@ -33,7 +33,7 @@
       注意：如果设置了STATEMENT，则query执行结束时会把当前会话的本地缓存清除，即当前会话的查询语句总是会查询数据库。参考：org.apache.ibatis.executor.BaseExecutor.query(org.apache.ibatis.mapping.MappedStatement, java.lang.Object, org.apache.ibatis.session.RowBounds, org.apache.ibatis.session.ResultHandler, org.apache.ibatis.cache.CacheKey, org.apache.ibatis.mapping.BoundSql)
     -->
     <setting name="localCacheScope" value="SESSION"/>
-    <!-- 默认为true -->
+    <!-- 开启二级缓存，默认为true -->
     <setting name="cacheEnabled" value="true"/>
     <!--    <setting name="lazyLoadingEnabled" value="false"/>-->
 <!--    <setting name="multipleResultSetsEnabled" value="true"/>-->
@@ -41,10 +41,13 @@
 <!--    <setting name="useGeneratedKeys" value="false"/>-->
 <!--    <setting name="defaultExecutorType" value="SIMPLE"/>-->
 <!--    <setting name="defaultStatementTimeout" value="25"/>-->
+
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
   </settings>
 
   <typeAliases>
-    <typeAlias alias="PersonInfo" type="org.apache.ibatis.local.test.model.PersonInfo"/>
+<!--    <typeAlias alias="PersonInfo" type="org.apache.ibatis.local.test.model.PersonInfo"/>-->
+    <package name="org.apache.ibatis.local.test.model"/>
   </typeAliases>
 
   <environments default="development">
@@ -63,6 +66,8 @@
 
   <mappers>
     <mapper resource="org/apache/ibatis/builder/local/mapper/PersonMapper.xml"/>
+    <mapper resource="org/apache/ibatis/builder/local/mapper/BookMapper.xml"/>
+    <mapper resource="org/apache/ibatis/builder/local/mapper/PersonBookMapper.xml"/>
   </mappers>
 
 </configuration>
